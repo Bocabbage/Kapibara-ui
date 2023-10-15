@@ -3,7 +3,7 @@ import 'tdesign-vue-next/es/style/index.css';
 import { reactive } from 'vue';
 import { DesktopIcon, LockOnIcon } from 'tdesign-icons-vue-next';
 import { sha256 } from 'js-sha256';
-// bcrypt from 'bcryptjs'
+// import bcrypt from 'bcryptjs'
 
 
 const login_api_uri = import.meta.env.VITE_LOGIN_API_URI
