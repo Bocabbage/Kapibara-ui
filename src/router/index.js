@@ -1,10 +1,12 @@
-import { createRouter, createWebHashHistory } from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router'
+import userStateApis from '@/store/user'
 
 const routes = [
     {
         path: "/",
+        name: "home",
         meta: { requireAuthentication: true },
-        component: () => import('@/pages/HomePage.vue')
+        component: () => import('@/pages/HomePage.vue'),
     },
     {
         path: "/login",
@@ -14,19 +16,16 @@ const routes = [
 ]
 
 const router = createRouter({
-    history: createWebHashHistory(),
+    history: createWebHistory(),
     routes: routes
 })
 
 router.beforeEach((to, from, next) => {
-    /* [Todo] login-state check */
-    if(to.meta.requireAuthentication && false)
-    {
+    if(to.meta.requireAuthentication && !userStateApis.isAuthorized()) {
         next({name: "login", query: {redirect: to.fullPath}})
     }
-    else
-    {
-
+    else {
+        next()
     }
 })
 

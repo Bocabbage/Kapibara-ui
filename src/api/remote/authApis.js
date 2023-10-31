@@ -10,13 +10,14 @@ export default {
     // ::param (account, password)
     login(account, password) {
         let crypto_password = sha256(password + login_pwd_salt)
-        return axios.post(
+        return axios.get(
             login_api_uri,
             {
-                account: account,
-                password: crypto_password
-            },
-            {headers: {'Content-Type': 'application/json'}}
+                params: {
+                    account: account,
+                    password: crypto_password
+                }
+            }
         )
     }
 }

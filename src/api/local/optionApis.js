@@ -3,11 +3,11 @@ export default {
     setSession(session) {
         if(session.remeberMe)
         {
-            localStorage.setItem(LOCAL_SESSION_KEY, json.stringify(session))
+            localStorage.setItem(LOCAL_SESSION_KEY, JSON.stringify(session))
         }
         else
         {
-            sessionStorage.setItem(LOCAL_SESSION_KEY, json.stringify(session))
+            sessionStorage.setItem(LOCAL_SESSION_KEY, JSON.stringify(session))
         }
     },
 
