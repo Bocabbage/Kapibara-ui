@@ -12,9 +12,6 @@ const login_info = reactive({
   rememberMe: false,
 });
 
-const login_api_uri = import.meta.env.VITE_LOGIN_API_URI
-const login_pwd_salt = import.meta.env.VITE_USER_PASSWORD_SALT
-
 async function loginRequest()
 {
 

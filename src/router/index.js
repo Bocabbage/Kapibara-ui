@@ -23,8 +23,9 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
     if(to.meta.requireAuthentication && !userStateApis.isAuthorized()) {
         next({name: "login", query: {redirect: to.fullPath}})
-    }
-    else {
+    } else if(to.name === "login" && userStateApis.isAuthorized()) {
+        next({name: "home", query: {redirect: to.fullPath}})
+    } else {
         next()
     }
 })

@@ -2,6 +2,8 @@
 import 'tdesign-vue-next/es/style/index.css';
 import LoginForm from '@/components/LoginForm.vue'
 // import bcrypt from 'bcryptjs'
+// import userStoreApis from '@/store/user'
+// console.log("test in home:", userStoreApis.getUserSessionData().session)
 </script>
 
 <template>

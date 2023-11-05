@@ -20,7 +20,6 @@ const EMPTY_ACCOUNT = () => ({
 
 const userSessionState = reactive({
     session:
-        // assign(target, source)
         optionApis.hasSession() ?
         Object.assign(EMPTY_SESSION(), optionApis.getSession()) :
         EMPTY_SESSION,
@@ -30,6 +29,15 @@ const userSessionState = reactive({
 
 export default {
     isAuthorized() {
+        // console.log("access_token: ", userSessionState.session.access_token)
+        // console.log("expires and nowtime: ", userSessionState.session.expires, ", ", new Date().getTime())
+        // console.log("getSession: ", optionApis.getSession())
+        if (userSessionState.session.expires <= new Date().getTime())
+        {
+            optionApis.removeSession()
+            userSessionState.session = EMPTY_SESSION
+        }
+
         return (userSessionState.session.access_token && userSessionState.session.expires > new Date().getTime())
     },
 

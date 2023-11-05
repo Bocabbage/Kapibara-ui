@@ -1,7 +1,7 @@
 const LOCAL_SESSION_KEY = 'Client-Session'
 export default {
     setSession(session) {
-        if(session.remeberMe)
+        if(session.rememberMe)
         {
             localStorage.setItem(LOCAL_SESSION_KEY, JSON.stringify(session))
         }
