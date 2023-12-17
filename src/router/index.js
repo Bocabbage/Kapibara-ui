@@ -5,13 +5,19 @@ const routes = [
     {
         path: "/",
         name: "home",
-        meta: { requireAuthentication: true },
+        meta: { requireAuthentication: false },
         component: () => import('@/pages/HomePage.vue'),
     },
     {
         path: "/login",
         name: "login",
         component: () => import('@/pages/LoginPage.vue')
+    },
+    {
+        path: "/admin",
+        name: "admin",
+        meta: { requireAuthentication: true },
+        component: () => import('@/pages/AdminPage.vue')
     }
 ]
 

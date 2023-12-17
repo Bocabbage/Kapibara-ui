@@ -5,6 +5,7 @@ import option from "@/api/local/optionApis"
 axios.defaults.timeout = constants.REMOTE_TIMEOUT
 axios.defaults.baseURL = constants.REMOTE_BASE_URL
 
+// todo: check validity
 // global http-request interceptor
 axios.interceptors.request.use(
     (config) => {
@@ -26,6 +27,21 @@ axios.interceptors.request.use(
         return Promise.reject(error)
     }
 )
+
+// axios.interceptors.response.use(res => {
+//     if (res.data && res.data.code && res.data.code !== 0) {
+//         return Promise.reject(Error(res.data.message))
+//     } else {
+//         return Promise.resolve(res)
+//     }
+// }, error => {
+//     console.error('remote server failed: ', error)
+//     const res = error.response
+//     if (res && res.data) {
+//         console.error(res.data)
+//     }
+//     return Promise.reject(error)
+// })
 
 export default {
     // local-apis

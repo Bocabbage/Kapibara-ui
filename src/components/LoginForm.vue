@@ -1,23 +1,26 @@
 <script setup>
 import 'tdesign-vue-next/es/style/index.css';
-import { reactive } from 'vue';
+import { reactive, ref } from 'vue';
 import { DesktopIcon, LockOnIcon } from 'tdesign-icons-vue-next';
 import  AuthApis from '@/api/remote/authApis'
 import storeUser from '@/store/user'
 import router from '@/router/index'
 
 const login_info = reactive({
-  account: '',
+  username: '',
   password: '',
   rememberMe: false,
 });
 
+const isLoading = ref(false)
+
 async function loginRequest()
 {
+  isLoading.value = true
 
   try {
     // Current data should provide: username, expires, access_token
-    let {data} = await AuthApis.login(login_info.account, login_info.password)
+    let {data} = await AuthApis.login(login_info.username, login_info.password)
     data.rememberMe = login_info.rememberMe
     storeUser.setUserSessionState(data)
     // [debug]
@@ -25,8 +28,13 @@ async function loginRequest()
     await router.push({name: "home"})
 
   } catch(e) {
+    // [todo] enhance error-handling
     console.log("Error: ", e.message, e.code)
+    location.reload()
+    alert("Login failed!")
   }
+
+  isLoading.value = false
 
 }
 </script>
@@ -34,8 +42,8 @@ async function loginRequest()
 <template>
   <div class="login-form-item" id="inputform" align="center">
   <t-form ref="form" :data="login_info" :colon="true" :label-width="0">
-    <t-form-item name="account">
-      <t-input v-model="login_info.account" clearable placeholder="Account">
+    <t-form-item name="username">
+      <t-input v-model="login_info.username" clearable placeholder="Username">
         <template #prefix-icon>
           <desktop-icon />
         </template>
@@ -56,19 +64,15 @@ async function loginRequest()
       <t-checkbox v-model="login_info.rememberMe">Remember Me</t-checkbox>
     </div>
 
-    <div class="login-form-item" align="right">
-      <t-space size="small">
+    <div class="login-form-item">
+      <t-space size="large" direction="vertical" align="center">
         <t-button
-            theme="danger"
-            size="large">
-          Sign in
-        </t-button>
-
-        <t-button
+            block
             theme="success"
             size="large"
             type="submit"
             @click="loginRequest"
+            :loading="isLoading"
         >
           Log in
         </t-button>
@@ -81,5 +85,10 @@ async function loginRequest()
 <style scoped>
 #inputform {
   grid-row: span 2;
+}
+
+.t-button {
+  min-width: 300px;
+  max-width: 400px;
 }
 </style>
